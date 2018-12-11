@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+html {
+  min-height: 100%;
+}
+
+body {
+    padding-top: 54px !important;
+    height: 100%;
+    background-color: #fbfbfb !important;
+  }
+  
+  @media (min-width: 992px) {
+    body {
+      padding-top: 56px;
+    }
+  }
+
+  footer {
+    margin-top: 2em;
+  }
+  

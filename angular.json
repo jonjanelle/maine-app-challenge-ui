@@ -23,9 +23,14 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/vendor/bootstrap/css/bootstrap.min.css",
+              "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/vendor/jquery/jquery.js",
+              "src/vendor/bootstrap/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
