@@ -1,0 +1,58 @@
+.carousel-item {
+    height: 33vh;
+    min-height: 250px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+  .card-img-top {
+    margin: 0 auto;
+    display: block;
+    max-height: 200px;
+    height: auto;
+  }
+  .card-body {
+    font-size: 1.2em;
+    text-align: center;
+  }
+  .header-blue {
+    background-color: navy;
+    color: white;
+    font-weight: 500;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
+  .portfolio-item {
+    margin-bottom: 30px;
+  }
+
+  .image-text {
+    color: rgb(250, 250, 250); 
+    background-color: rgba(190,150,220,.4); 
+    padding: 2rem; 
+    border-radius: 1em;
+  }
+
+  .outline {
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  .gray-1 {
+    color: #454545;
+    font-weight: 500;
+  }
+
+  .feature-card {
+    overflow: hidden;
+    transition: .2s ease-in-out;
+  }
+  .feature-card:hover {
+    box-shadow: 0 3px 5px rgba(0,0,0,0.4);
+  }

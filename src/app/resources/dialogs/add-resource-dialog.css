@@ -1,0 +1,25 @@
+.mat-dialog-content {
+    max-height: 70vh !important;
+    overflow: inherit !important;
+    margin-bottom: 1em;
+}
+
+.error-message {
+    padding: 5px 0px;
+    color: lightcoral;
+    font-size: 0.8em;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 30vw;
+  }
+  
+  .form-container > * {
+    width: 100%;
+  }
+
+  textarea {
+    box-shadow: none;
+  }
