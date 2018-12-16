@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { CatComponent } from './cats/cat.component';
 import { HomeComponent } from './home/home.component'; 
 import { ResourcesComponent } from './resources/resources.component';
+import { EventsComponent } from './events/events.component';
 import {MatButtonModule, MatCheckboxModule, MatCardModule, MatRippleModule,
         MatInputModule, MatTabsModule, MatTableModule, MatPaginatorModule, MatIconModule,
         MatProgressSpinnerModule, MatDialogModule, MatSnackBarModule, MatAutocompleteModule,
@@ -26,6 +27,7 @@ import { AppService } from './app.service';
     HomeComponent,
     NavbarComponent,
     ResourcesComponent, 
+    EventsComponent,
     AddResourceDialog,
     AddEventDialog
   ],

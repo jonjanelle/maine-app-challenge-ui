@@ -14,7 +14,7 @@ interface IEventError {
 }
 
 /**
- * @title Add resource dialog
+ * @title Add event dialog
  */
 @Component({
   selector: 'add-event-dialog',
