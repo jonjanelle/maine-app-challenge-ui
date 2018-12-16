@@ -4,7 +4,7 @@
             <h3 style="text-align: center">Loading resources...</h3>
             <mat-progress-spinner mode="indeterminate" style="margin: 0 auto;"></mat-progress-spinner>
         </div>
-        <mat-tab-group [backgroundColor]="'accent'" [color]="'primary'" (selectedIndexChange)="setCurrentSection($event)">
+        <mat-tab-group [color]="'primary'" (selectedIndexChange)="setCurrentSection($event)">
             <mat-tab *ngFor="let resourceSection of resourceSections; let i = index" label="{{resourceSection.title}}" class="table-bordered">
                 <mat-card>
                     <div class="text-right">
