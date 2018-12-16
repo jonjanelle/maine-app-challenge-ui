@@ -59,10 +59,10 @@
 
 @media(max-width: 768px) {
   h1 {
-    font-size: 1.6em !important;
+    font-size: 1.55em !important;
   }
   h3 {
-    font-size: 1.2em !important;
+    font-size: 1.1em !important;
   }
   .carousel-caption {
     display: inline !important;
