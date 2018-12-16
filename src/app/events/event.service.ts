@@ -4,6 +4,7 @@ import { IEvent } from '../interfaces/IEvent';
 import { Observable, of } from 'rxjs';
 import { IKeyValuePair } from '../interfaces/IKeyValuePair';
 import { isNullOrUndefined } from 'util';
+import { AppService } from '../app.service';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type':  'application/json'})
@@ -13,9 +14,14 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class EventService {
-  private readonly eventUri: string;
-  constructor(private http: HttpClient) { 
-      this.eventUri = 'http://localhost:3000/events';  
+  private eventUri: string;
+  constructor(
+    private http: HttpClient,
+    private appService: AppService
+  ) { 
+    this.appService.getBaseUri().subscribe(baseUri => {
+      this.eventUri = baseUri + 'events';  
+    })
   }
 
   public getEvents(routeParams: IKeyValuePair<string, string>[] = null): Observable<IEvent[]> {

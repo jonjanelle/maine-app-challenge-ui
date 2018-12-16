@@ -16,6 +16,7 @@ import {MatButtonModule, MatCheckboxModule, MatCardModule, MatRippleModule,
         MatSortModule} from '@angular/material';
 import { AddResourceDialog } from './resources/dialogs/add-resource-dialog';
 import { AddEventDialog } from './events/dialogs/add-event-dialog';
+import { AppService } from './app.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { AddEventDialog } from './events/dialogs/add-event-dialog';
   exports: [MatButtonModule, MatCheckboxModule, MatCardModule, MatRippleModule, 
     MatPaginatorModule, MatTabsModule, MatTableModule, MatInputModule, MatIconModule,
     MatProgressSpinnerModule, MatDialogModule, MatSnackBarModule],
-  providers: [],
+  providers: [AppService],
   bootstrap: [NavbarComponent, AppComponent, FooterComponent]
 })
 export class AppModule { }

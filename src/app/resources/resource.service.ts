@@ -4,6 +4,7 @@ import { IResource } from '../interfaces/IResource';
 import { Observable, of } from 'rxjs';
 import { IKeyValuePair } from '../interfaces/IKeyValuePair';
 import { isNullOrUndefined } from 'util';
+import { AppService } from '../app.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,15 +16,21 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class ResourceService {
-  private readonly resourceUri: string;
-  constructor(private http: HttpClient) { 
-      this.resourceUri = 'http://localhost:3000/resources';  
-  }
+  private resourceUri: string;
+
+  constructor(
+      private http: HttpClient,
+      private appService: AppService
+    ) { 
+      this.appService.getBaseUri().subscribe(baseUri => {
+        this.resourceUri = baseUri + "resources";
+      });
+    }
 
   public getResources(routeParams: IKeyValuePair<string, string>[] = null): Observable<IResource[]> {
     let endpoint = "";
     if (!isNullOrUndefined(routeParams) && routeParams.length > 0) 
-      endpoint = this.addRouteParams(this.resourceUri, routeParams);
+      endpoint = this.appService.buildUrl(this.resourceUri, routeParams);
     else 
       endpoint = this.resourceUri;
     
@@ -43,8 +50,4 @@ export class ResourceService {
 
   }
   
-  private addRouteParams(baseUri: string, routeParams: IKeyValuePair<string, string>[]): string {
-    baseUri = baseUri[baseUri.length - 1] === '/' ? baseUri.substring(0, baseUri.length-1) : baseUri; 
-    return baseUri + '?' + routeParams.map(rp => `${rp.key}=${rp.value}`).join('&');    
-  }
 }
