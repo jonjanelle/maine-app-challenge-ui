@@ -28,21 +28,26 @@ import { isNullOrUndefined } from 'util';
 })
 
 export class ResourcesComponent implements OnInit {
-  // public resourceSections: IResourceSection[];
   public resourceSections: IResourceSection[];
   public resources: IResource[];
   public displayedColumns: string[] = ['name', 'description', 'url'];
   public isBusy: boolean;
   public resourceSearchCtrl: FormControl;
   public filteredResources: Observable<IResource[]>;
-  private currentSection: string;
   public dataSources: MatTableDataSource<IResource>[]; 
+  
+  private currentSection: string;
+  
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private resourceService: ResourceService, public dialog: MatDialog) { 
+  constructor(
+    public resourceService: ResourceService, 
+    public dialog: MatDialog
+  ) { 
     this.getResources();
     this.resourceSearchCtrl = new FormControl();
   }
+
   ngOnInit() {
     this.filteredResources = this.resourceSearchCtrl.valueChanges
       .pipe(
@@ -62,8 +67,9 @@ export class ResourcesComponent implements OnInit {
 
   public searchByName(queryString: string): Observable<IResource[]> { 
     let filters: IKeyValuePair<string, string>[] = [{key: "name", value: queryString}];
-    if (!isNullOrUndefined(ResourceType[this.currentSection]))
+    if (!isNullOrUndefined(ResourceType[this.currentSection])) {
       filters.push({key: "resource_type_id", value: ResourceType[this.currentSection]});
+    }
      
     return this.resourceService.getResources(filters);
   }

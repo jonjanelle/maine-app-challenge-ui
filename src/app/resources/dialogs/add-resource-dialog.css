@@ -13,7 +13,7 @@
 .form-container {
     display: flex;
     flex-direction: column;
-    min-width: 30vw;
+    min-width: 50vw;
   }
   
   .form-container > * {

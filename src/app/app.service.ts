@@ -6,7 +6,8 @@ import { IKeyValuePair } from './interfaces/IKeyValuePair';
   providedIn: 'root',
 })
 export class AppService {
-  private readonly baseUri: string = "https://maine-app-challenge.herokuapp.com/";
+
+  private readonly baseUri: string = "https://maine-app-challenge-api.herokuapp.com/";
   constructor() { }
 
   public getBaseUri(): Observable<string> {
@@ -16,6 +17,10 @@ export class AppService {
   public buildUrl(baseUri: string, routeParams: IKeyValuePair<string, string>[]): string {
     baseUri = baseUri[baseUri.length - 1] === '/' ? baseUri.substring(0, baseUri.length-1) : baseUri; 
     return baseUri + '?' + routeParams.map(rp => `${rp.key}=${rp.value}`).join('&');    
+  }
+
+  public isMobile(): boolean {
+    return window.innerWidth <= 768;
   }
 
 }
