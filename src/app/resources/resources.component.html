@@ -7,9 +7,9 @@
         <mat-tab-group [color]="'primary'" (selectedIndexChange)="setCurrentSection($event)">
             <mat-tab *ngFor="let resourceSection of resourceSections; let i = index" label="{{resourceSection.title}}" class="table-bordered">
                 <mat-card>
-                    <div style="float: right;">
-                        <button mat-raised-button color="primary" (click)="addResource(resourceSection.title)">
-                                <mat-icon style="font-size: 1.5em;">add</mat-icon> Add {{resourceSection.addName}}
+                    <div class="row" style="float: right; padding-right: 1em;">
+                        <button class="add-button" mat-raised-button color="primary" (click)="addResource(resourceSection.title)">
+                            <mat-icon>add</mat-icon> Add {{resourceSection.addName}}
                         </button>
                     </div>
                     <form class="resource-form">
