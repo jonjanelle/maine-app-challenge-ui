@@ -115,65 +115,58 @@
         <!-- BEGIN SECTION BOXES -->
         <div class="row mt-5">
             <div class="col-lg-4 col-sm-6 mb-4 pr-4 pl-4">
-                <div class="card h-100">
-                    <h4 class="card-header header-blue">Resource Database</h4>
-                    <div class="card-body">
-                        <div class="row card-text">
-                            <div class="col-12">
-                                View or post resources to help guide you through building your first apps.
-                            </div>
-                            <div class="col-12 text-center mt-1">
-                                <i class="material-icons display-3" style="color:coral">event</i>
-                            </div>
+                <mat-card>
+                    <mat-card-title>Resources</mat-card-title>
+                    <mat-card-content class="text-center">
+                        <div>
+                                <i class="material-icons display-3" style="color:lightcoral">
+                                        stay_current_portrait
+                                </i>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <a routerLink="/resources" mat-raised-button class="btn-block">View Resources</a>
-                    </div>
-                </div>
+                        <p>View resources to guide you through your first apps.</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <a color="primary" routerLink="/resources" mat-raised-button class="btn-block">View Resources</a>
+                    </mat-card-actions>
+                </mat-card>
             </div>
             <div class="col-lg-4 col-sm-6 mb-4 pr-4 pl-4">
-                <div class="card h-100">
-                    <h4 class="card-header header-blue">Events</h4>
-                    <div class="card-body">
-                        <div class="row card-text">
-                            <div class="col-12">
-                                Browse our calendar of computer science events in Maine.
-                            </div>
-                            <div class="col-12 text-center mt-1">
-                                <i class="material-icons display-3" style="color:darkmagenta;">library_books</i>
-                            </div>
+                <mat-card>
+                    <mat-card-title>Events</mat-card-title>
+                    <mat-card-content class="text-center">
+                        <div>
+                            <i class="material-icons display-3" style="color: darkmagenta;">library_books</i>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" mat-raised-button class="btn-block" disabled="true">Coming soon!</a>
-                    </div>
-                </div>
+                        <p> Browse our calendar of computer science events in Maine.</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <a href="#" mat-raised-button disabled="true" class="btn-block primary">Coming soon!</a>
+                    </mat-card-actions>
+                </mat-card>
             </div>
+
             <div class="col-lg-4 col-sm-6 mb-4 pr-4 pl-4">
-                <div class="card h-100">
-                    <h4 class="card-header header-blue">Forum</h4>
-                    <div class="card-body">
-                        <div class="row card-text">
-                            <div class="col-12">
-                                Have a question or something to share? Visit the forum!
-                            </div>
-                            <div class="col-12 text-center mt-1">
-                                <i class="material-icons display-3" style="color: lawngreen;">forum</i>
-                            </div>
+                <mat-card>
+                    <mat-card-title>
+                        Forum
+                    </mat-card-title>
+                    <mat-card-content class="text-center">
+                        <div>
+                            <i class="material-icons display-3" style="color: lawngreen;">forum</i>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                    <a href="#" mat-raised-button disabled="true" class="btn-block primary">Coming soon!</a>
-                    </div>
-                </div>
+                        <p>Have a question or something to share? Visit the forum!</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <a href="#" mat-raised-button disabled="true" class="btn-block primary">Coming soon!</a>
+                    </mat-card-actions>
+                </mat-card>
              </div>
         </div>
         <!-- END SECTION BOXES -->
         <hr>
         <!-- BEGIN ABOUT -->
         <div class="row mt-5">
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <mat-card matRipple>
                     <h2>About</h2>
                     <p>
@@ -193,7 +186,7 @@
                     </ul>
                 </mat-card>
             </div>
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <mat-card>
                     <img class="img-fluid rounded" src="https://assets.pcmag.com/media/images/485120-learn-to-code.jpg?thumb=y&width=810&height=456" alt="">
                 </mat-card>
