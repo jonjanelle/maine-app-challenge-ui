@@ -9,7 +9,7 @@
                 <mat-card>
                     <div class="row" style="float: right; padding-right: 1em;">
                         <button class="add-button" mat-raised-button color="primary" (click)="addResource(resourceSection.title)">
-                            <mat-icon>add</mat-icon> Add {{resourceSection.addName}}
+                            <mat-icon>add</mat-icon> New {{ resourceSection.addName | lowercase }}
                         </button>
                     </div>
                     <form class="resource-form">
