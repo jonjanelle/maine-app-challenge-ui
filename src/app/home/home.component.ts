@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppService } from '../app.service';
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
@@ -6,6 +7,13 @@ import { Component } from '@angular/core';
 })
 
 export class HomeComponent {
-  title = 'maine-app-challenge-ui';
+  public title = 'maine-app-challenge-ui';
+  public readonly isMobile: boolean;
+
+  constructor(
+    public appService: AppService
+  ) { 
+    this.isMobile = this.appService.isMobile();
+  }
 }
  

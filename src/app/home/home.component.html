@@ -130,7 +130,7 @@
                     </mat-card-actions>
                 </mat-card>
             </div>
-            <div class="col-lg-4 col-sm-6 mb-4 pr-4 pl-4">
+            <div *ngIf="!isMobile" class="col-lg-4 col-sm-6 mb-4 pr-4 pl-4">
                 <mat-card>
                     <mat-card-title>Events</mat-card-title>
                     <mat-card-content class="text-center">
@@ -145,7 +145,7 @@
                 </mat-card>
             </div>
 
-            <div class="col-lg-4 col-sm-6 mb-4 pr-4 pl-4">
+            <div *ngIf="!isMobile" class="col-lg-4 col-sm-6 mb-4 pr-4 pl-4">
                 <mat-card>
                     <mat-card-title>
                         Forum

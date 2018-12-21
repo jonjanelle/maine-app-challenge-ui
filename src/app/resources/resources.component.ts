@@ -20,6 +20,7 @@ import { IKeyValuePair } from '../interfaces/IKeyValuePair';
 import { ResourceService } from './resource.service';
 import { IAddResourceDialogData } from './dialogs/IAddResourceDialogData';
 import { isNullOrUndefined } from 'util';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'view-resources',
@@ -35,17 +36,20 @@ export class ResourcesComponent implements OnInit {
   public resourceSearchCtrl: FormControl;
   public filteredResources: Observable<IResource[]>;
   public dataSources: MatTableDataSource<IResource>[]; 
-  
+  public isMobile: boolean;
+
   private currentSection: string;
   
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     public resourceService: ResourceService, 
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private appService: AppService
   ) { 
     this.getResources();
     this.resourceSearchCtrl = new FormControl();
+    this.isMobile = this.appService.isMobile();
   }
 
   ngOnInit() {
