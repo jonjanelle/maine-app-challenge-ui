@@ -1,3 +1,4 @@
+// TODO: values should be retrieved from server. 
 export enum ResourceType {
     Readings = 1, 
     Videos = 2, 

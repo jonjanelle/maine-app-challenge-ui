@@ -6,8 +6,7 @@
         </div>
         <mat-tab-group [color]="'primary'" (selectedIndexChange)="setCurrentSection($event)">
             <mat-tab *ngFor="let resourceSection of resourceSections; let i = index" label="{{resourceSection.title}}" class="table-bordered">
-                <mat-card>
-                    <div class="row" style="float: right; padding-right: 1em;">
+                <div class="row" style="float: right; padding-right: 1em;">
                         <button class="add-button" mat-raised-button color="primary" (click)="addResource(resourceSection.title)">
                             <mat-icon>add</mat-icon> New {{ resourceSection.addName | lowercase }}
                         </button>
@@ -18,11 +17,12 @@
                         </mat-form-field>
                     </form>
                     <div *ngIf="resourceSection.resources.length > 0; else noResultBlock">
-
-                        <div class="mat-elevation-z1">
+                        
+                        <!-- <div class="mat-elevation-z1"> -->
+                            <div>
                             <!-- <table mat-table matSort [dataSource]="dataSources[i]" class="table-striped mat-elevation-z4"> -->
-                            <div *ngIf="isMobile">
-                                <mat-card *ngFor="let resource of resourceSection.resources">
+                                <div *ngIf="isMobile">
+                                <mat-card *ngFor="let resource of resourceSection.resources" class="mb-2">
                                     <mat-card-title>{{resource.name}}</mat-card-title>
                                     <mat-card-subtitle>
                                         <a href="{{resource.url}}" target="_blank" rel="noopener">{{resource.url}}</a> 
@@ -30,8 +30,9 @@
                                     <mat-card-content [innerHTML]=resource.description></mat-card-content>
                                 </mat-card>
                             </div>
-       
-                            <table *ngIf="!isMobile" mat-table [dataSource]="resourceSection.resources" matSort class="table-striped mat-elevation-z4">
+                            
+                            <mat-card *ngIf="!isMobile">
+                            <table mat-table [dataSource]="resourceSection.resources" matSort class="table-striped mat-elevation-z4">
                                 <ng-container matColumnDef="name">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
                                     <td mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -52,10 +53,10 @@
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             </table>  
+                            </mat-card>
                          
                         </div>
                     </div>            
-                </mat-card>
                 <ng-template #noResultBlock>
                     <span style="color: crimson;font-size:medium">
                             No results found
