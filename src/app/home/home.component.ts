@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AppService } from '../app.service';
 @Component({
   selector: 'home',
@@ -8,12 +8,19 @@ import { AppService } from '../app.service';
 
 export class HomeComponent {
   public title = 'maine-app-challenge-ui';
-  public readonly isMobile: boolean;
+  public isMobile: boolean;
 
   constructor(
     public appService: AppService
   ) { 
-    this.isMobile = this.appService.isMobile();
   }
+
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.isMobile = event.target.innerWidth <= 768;
+  }
+
+
 }
  
