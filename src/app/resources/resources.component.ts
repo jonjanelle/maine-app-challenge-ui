@@ -1,6 +1,6 @@
 import {Component, OnInit, ElementRef, ViewChild, HostListener} from '@angular/core';
 import {MatSort, MatTableDataSource, MatChipInputEvent, MatDialog,
-        MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material';
+        MatAutocompleteSelectedEvent, MatAutocomplete, Sort} from '@angular/material';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith, debounceTime, switchMap} from 'rxjs/operators';
@@ -50,16 +50,20 @@ export class ResourcesComponent implements OnInit {
   public categories: string[] = [];
   // TODO: retrieve categories from server. 
   public allCategories: string[] = ['Android', 'iOS', 'App Inventor', 'Code.Org'];
-  //
+  
+  //sort fields for select on mobile
+  public sortFields: IKeyValuePair<string, string>[] = [{key: "Name", value: "name"},
+                                                        {key: "Description", value: "description"},
+                                                        {key: "URL", value: "url"}];
+  public sortDir: string = "asc";
 
+  //name of currently selected tab, corresponds to a ResourceType name and is used to look up ResourceType ids
   private currentSection: string;
   
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('categoryInput') categoryInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
  
-
-
   constructor(
     public resourceService: ResourceService, 
     public dialog: MatDialog,
@@ -119,7 +123,33 @@ export class ResourcesComponent implements OnInit {
       this.isBusy = false;
     });
   }
-  
+
+  // Sorting methods          //
+  /////////////////////////////
+
+
+  public sortResources(sort: Sort, resourceSectionIndex: number) {
+    console.log("sort", sort, "resourceSectionid", resourceSectionIndex);
+    const data = this.resourceSections[resourceSectionIndex].resources.slice();
+    if (!sort.active || sort.direction === '') {
+      this.resources = data;
+      return;
+    }
+
+    this.resourceSections[resourceSectionIndex].resources = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'name': return this.compare(a.name, b.name, isAsc);
+        case 'description': return this.compare(a.description, b.description, isAsc);
+        case 'url': return this.compare(a.url, b.url, isAsc);
+        default: return 0;
+      }
+    });
+  }
+  private compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
   // Category filter methods //
   /////////////////////////////
   public addFilterCategory(event: MatChipInputEvent): void {
@@ -162,7 +192,8 @@ export class ResourcesComponent implements OnInit {
     return this.allCategories.filter(c => c.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  // END CATEGORY FILTER CHIP METHODS // 
+  // Initialization // 
+  ///////////////////
 
   private setResourceSections() {
       this.resourceSections = [
@@ -174,7 +205,6 @@ export class ResourcesComponent implements OnInit {
       ];
       if (isNullOrUndefined(this.currentSection)) 
         this.currentSection = this.resourceSections[0].title;
-      
   }
 
   public addResource(resourceType: string): void {

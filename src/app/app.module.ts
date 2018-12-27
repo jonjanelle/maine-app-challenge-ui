@@ -14,7 +14,7 @@ import { EventsComponent } from './events/events.component';
 import {MatButtonModule, MatCheckboxModule, MatCardModule, MatRippleModule,
         MatInputModule, MatTabsModule, MatTableModule, MatPaginatorModule, MatIconModule,
         MatProgressSpinnerModule, MatDialogModule, MatSnackBarModule, MatAutocompleteModule,
-        MatSortModule, MatToolbarModule, MatListModule, MatChipsModule} from '@angular/material';
+        MatSortModule, MatToolbarModule, MatListModule, MatChipsModule, MatSelectModule} from '@angular/material';
 import { AddResourceDialog } from './resources/dialogs/add-resource-dialog';
 import { AddEventDialog } from './events/dialogs/add-event-dialog';
 import { AppService } from './app.service';
@@ -42,7 +42,7 @@ import { AppService } from './app.service';
     MatButtonModule, MatCheckboxModule, MatCardModule, MatPaginatorModule,
     MatRippleModule, MatTabsModule, MatTableModule, MatInputModule, MatIconModule,
     MatProgressSpinnerModule, MatDialogModule, MatSnackBarModule, MatAutocompleteModule,
-    MatSortModule, MatToolbarModule, MatListModule, MatChipsModule
+    MatSortModule, MatToolbarModule, MatListModule, MatChipsModule, MatSelectModule
   ],
   exports: [MatButtonModule, MatCheckboxModule, MatCardModule, MatRippleModule, 
     MatPaginatorModule, MatTabsModule, MatTableModule, MatInputModule, MatIconModule,
