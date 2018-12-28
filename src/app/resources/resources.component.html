@@ -3,7 +3,6 @@
         <mat-card>
             <h3 style="text-align: center">Loading resources...</h3>
             <mat-progress-spinner mode="indeterminate" style="margin: 0 auto;"></mat-progress-spinner>
-
         </mat-card>
     </div>
     <mat-card *ngIf="!isBusy" class="main-card-container">
@@ -32,7 +31,7 @@
                     </div> -->
                 </div>
 
-                <div class="row">
+                <div class="row mt-2 mb-2">
                     <div class="col-10">
                         <mat-form-field class="chip-list" style="Width: 100%;">
                             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedCategory($event)">
@@ -61,13 +60,15 @@
                         </mat-form-field>
                     </div>
                     <div class="col-2">
-                        <mat-form-field>
-                            <mat-select placeholder="Join" [(ngModel)]="selectedJoinType" (selectionChange)="refreshCurrentResourceSection()">
-                                <mat-option *ngFor="let type of joinTypes" [value]="type">
-                                    {{ type }}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                        <div>
+                            <mat-form-field>
+                                <mat-select placeholder="Join" [(ngModel)]="selectedJoinType" (selectionChange)="refreshCurrentResourceSection()">
+                                    <mat-option *ngFor="let type of joinTypes" [value]="type">
+                                        {{ type }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
                 
