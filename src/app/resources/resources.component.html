@@ -14,7 +14,7 @@
                     <div class="col-10">
                         <form class="resource-form">
                             <mat-form-field style="width: 100%;">
-                                <input type="text" placeholder="Search for {{resourceSection.addName | lowercase}}" aria-label="Search for resource" matInput [formControl]="resourceSearchCtrl">
+                                <input [(ngModel)]="resourceSearchEntry" type="text" placeholder="Search for {{resourceSection.addName | lowercase}}" aria-label="Search for resource" matInput [formControl]="resourceSearchCtrl">
                             </mat-form-field>
                         </form>
                     </div>
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-10">
                         <mat-form-field class="chip-list" style="Width: 100%;">
                             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedCategory($event)">
                                 <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
@@ -56,9 +56,17 @@
                                 [matAutocomplete]="auto"
                                 [matChipInputFor]="chipList"
                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                [matChipInputAddOnBlur]="addOnBlur"
-                                (matChipInputTokenEnd)="addFilterCategory($event)">
+                                [matChipInputAddOnBlur]="addOnBlur">
                             </mat-chip-list>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-2">
+                        <mat-form-field>
+                            <mat-select placeholder="Join" [(ngModel)]="selectedJoinType" (selectionChange)="refreshCurrentResourceSection()">
+                                <mat-option *ngFor="let type of joinTypes" [value]="type">
+                                    {{ type }}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                 </div>

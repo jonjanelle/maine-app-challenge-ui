@@ -39,6 +39,9 @@ export class ResourcesComponent implements OnInit {
   public dataSources: MatTableDataSource<IResource>[]; 
   public isMobile: boolean;
   
+  // Search by name
+  public resourceSearchEntry: string = "";
+
   // Category filter chip controls
   public visible = true;
   public selectable = true;
@@ -48,14 +51,19 @@ export class ResourcesComponent implements OnInit {
   public categoryCtrl = new FormControl();
   public filteredCategories: Observable<string[]>;
   public categories: string[] = [];
-  // TODO: retrieve categories from server. 
-  public allCategories: string[] = ['Android', 'iOS', 'App Inventor', 'Code.Org'];
   
+  // TODO: retrieve categories from server.
+  public allCategories: string[] = ['Android', 'iOS', 'MIT App Inventor', 'Code.Org App Lab', 'Xamarin'];
+  private resourceCategories: IKeyValuePair<number, string[]>[] = [];
+
   //sort fields for select on mobile
   public sortFields: IKeyValuePair<string, string>[] = [{key: "Name", value: "name"},
                                                         {key: "Description", value: "description"},
                                                         {key: "URL", value: "url"}];
   public sortDir: string = "asc";
+
+  public joinTypes: string[] = ['or', 'and', 'not'];
+  public selectedJoinType: string = this.joinTypes[1];
 
   //name of currently selected tab, corresponds to a ResourceType name and is used to look up ResourceType ids
   private currentSection: string;
@@ -65,9 +73,9 @@ export class ResourcesComponent implements OnInit {
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
  
   constructor(
-    public resourceService: ResourceService, 
+    private resourceService: ResourceService, 
     public dialog: MatDialog,
-    public appService: AppService
+    private appService: AppService
   ) { 
     this.getResources();
     this.isMobile = window.innerWidth <= 768;
@@ -75,6 +83,7 @@ export class ResourcesComponent implements OnInit {
   
   ngOnInit() {
     this.resourceSearchCtrl = new FormControl();
+
     this.filteredResources = this.resourceSearchCtrl.valueChanges
       .pipe(
         debounceTime(250),
@@ -84,9 +93,16 @@ export class ResourcesComponent implements OnInit {
     this.filteredResources.subscribe(fr => {
       this.resourceSections.find(rs => rs.title == this.currentSection).resources = fr;
     });
+
     this.filteredCategories = this.categoryCtrl.valueChanges.pipe(
       startWith(null),
-      map((category: string | null) => category ? this._filter(category) : this.allCategories.slice()));
+      map((category: string | null) => {
+        if (category) 
+          return this._filter(category).filter(c => this.categories.indexOf(c) < 0);
+        else
+          return this.allCategories.filter(c => this.categories.indexOf(c) < 0).slice();
+      })
+    );
   }
 
   @HostListener('window:resize', ['$event'])
@@ -110,15 +126,18 @@ export class ResourcesComponent implements OnInit {
   
   public getResources() {
     this.isBusy = true;
-    this.resourceService.getResources().subscribe(resources => {
-      this.resources = resources;
+    this.resourceService.getResourceDescriptions().subscribe(rd => {
+      this.resources = rd.map(r => r.resource);
+      rd.forEach(r => this.resourceCategories.push({key: r.resource.id, value: r.categories.map(c => c.name)}));
+
       this.setResourceSections();
+      this.refreshCurrentResourceSection()
       if (isNullOrUndefined(this.dataSources) || this.dataSources.length === 0) {
         this.dataSources = this.resourceSections.map(rs => new MatTableDataSource(rs.resources));
         this.dataSources.forEach(ds => ds.sort = this.sort);
       }
     }, (err) => {
-      console.log("getResources(): ", err);
+      console.error("getResources(): ", err);
     }, () => {
       this.isBusy = false;
     });
@@ -126,10 +145,8 @@ export class ResourcesComponent implements OnInit {
 
   // Sorting methods          //
   /////////////////////////////
-
-
   public sortResources(sort: Sort, resourceSectionIndex: number) {
-    console.log("sort", sort, "resourceSectionid", resourceSectionIndex);
+    // console.log("sort", sort, "resourceSectionid", resourceSectionIndex);
     const data = this.resourceSections[resourceSectionIndex].resources.slice();
     if (!sort.active || sort.direction === '') {
       this.resources = data;
@@ -146,45 +163,58 @@ export class ResourcesComponent implements OnInit {
       }
     });
   }
+
   private compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
   // Category filter methods //
   /////////////////////////////
-  public addFilterCategory(event: MatChipInputEvent): void {
-    // Add only when MatAutocomplete is not open
-    // To make sure this does not conflict with OptionSelected Event
-    if (!this.matAutocomplete.isOpen) {
-      const input = event.input;
-      const value = event.value;
 
-      
-      if (!isNullOrUndefined(value) && value.trim().length > 0) {
-        this.categories.push(value.trim());
-      }
+  // public addFilterCategory(event: MatChipInputEvent): void {
+  //   // Add only when MatAutocomplete is not open
+  //   // To make sure this does not conflict with OptionSelected Event
+  //   if (!this.matAutocomplete.isOpen) {
+  //     const input = event.input;
+  //     const value = event.value;
 
-      // Reset the input value
-      if (input) {
-        input.value = '';
-      }
+  //     if (!isNullOrUndefined(value) && value.trim().length > 0) {
+  //       let cat = this.allCategories.find(c => c.key === value);
+  //       if (!isNullOrUndefined(cat) && !cat.value && this.categories.indexOf(value) < 0) {
+  //         this.categories.push(value);
+  //         // mark category as selected
+  //         cat.value = true;
+  //       }
+  //     }
 
-      this.categoryCtrl.setValue(null);
-    }
-  }
+  //     // Reset the input value
+  //     if (input) {
+  //       input.value = '';
+  //     }
+  //     this.categoryCtrl.setValue(null);
+  //   }
+  // }
 
   public removeFilterCategory(category: string): void {
     const index = this.categories.indexOf(category);
-
     if (index >= 0) {
       this.categories.splice(index, 1);
     }
+    this.refreshCurrentResourceSection();
   }
 
   selectedCategory(event: MatAutocompleteSelectedEvent): void {
-    this.categories.push(event.option.viewValue);
+    if (this.categories.indexOf(event.option.viewValue) < 0 &&
+        this.allCategories.indexOf(event.option.viewValue) >= 0
+    ) {
+      this.categories.push(event.option.viewValue);
+    }
     this.categoryInput.nativeElement.value = '';
     this.categoryCtrl.setValue(null);
+    this.categoryInput.nativeElement.blur();
+
+    
+     this.refreshCurrentResourceSection();
   }
 
   private _filter(value: string): string[] {
@@ -194,6 +224,29 @@ export class ResourcesComponent implements OnInit {
 
   // Initialization // 
   ///////////////////
+  private refreshCurrentResourceSection(): void {
+    let index = this.resourceSections.findIndex(rs => rs.title == this.currentSection);
+
+    this.resourceSections[index].resources = this.resources.filter(r => {      
+      let isCurrentType = this.resourceSections[index].title == 'All' || r.resource_type_id === ResourceType[this.resourceSections[index].title]
+      
+      let inSelectedCategory = true;
+      if (this.categories.length > 0) {
+        let resourceCategories = this.resourceCategories.find(rc => rc.key === r.id).value;
+        if (this.selectedJoinType === 'and') {
+          inSelectedCategory = resourceCategories.length > 0 && 
+                               this.categories.map(c => resourceCategories.indexOf(c) >= 0).every(r => r);
+        } else if (this.selectedJoinType === 'or') {
+          inSelectedCategory = resourceCategories.filter(c => this.categories.indexOf(c) >= 0).length > 0;
+
+        } else if (this.selectedJoinType === 'not') {
+          inSelectedCategory = resourceCategories.filter(c => this.categories.indexOf(c) >= 0).length === 0;
+        }
+      }
+      return isCurrentType && inSelectedCategory;
+    });
+
+  }
 
   private setResourceSections() {
       this.resourceSections = [
