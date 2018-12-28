@@ -6,7 +6,7 @@
 
         </mat-card>
     </div>
-    <mat-card *ngIf="!isBusy">
+    <mat-card *ngIf="!isBusy" class="main-card-container">
         <mat-tab-group dynamicHeight [color]="'primary'" (selectedIndexChange)="setCurrentSection($event)">
             <mat-tab *ngFor="let resourceSection of resourceSections; let i = index" label="{{resourceSection.title}}" >
                 
@@ -74,12 +74,12 @@
                 <div *ngIf="resourceSection.resources.length > 0; else noResultBlock">
                         
                     <div *ngIf="isMobile">
-                        <mat-card *ngFor="let resource of resourceSection.resources" class="mb-2">
+                        <mat-card *ngFor="let resource of resourceSection.resources" class="mb-2 mobile-card mr-1 ml-1">
                             <mat-card-title>{{resource.name}}</mat-card-title>
-                            <mat-card-subtitle>
+                            <mat-card-subtitle class="pl-1 pr-1">
                                 <a href="{{resource.url}}" target="_blank" rel="noopener">{{resource.url}}</a> 
                             </mat-card-subtitle>
-                            <mat-card-content [innerHTML]=resource.description></mat-card-content>
+                            <mat-card-content [innerHTML]="resource.description"></mat-card-content>
                         </mat-card>
                     </div>
                         

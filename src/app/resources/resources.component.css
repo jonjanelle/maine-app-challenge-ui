@@ -26,6 +26,15 @@ td {
     mat-icon {
         height: 100%;
     }
+    .main-card-container {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+    #resources-container{ 
+        padding-left: 0;
+        padding-right: 0;
+        margin-top: 0;
+    }
 }
 mat-icon {
     font-size: 1.5em; 
@@ -35,9 +44,22 @@ mat-icon {
     width: 100%;
 }
   
-  .example-full-width {
-    width: 100%;
-  }
-  mat-option {
-      font-size: .75rem;
-  }
+.example-full-width {
+width: 100%;
+}
+mat-option {
+    font-size: .75rem;
+}
+
+.mobile-card {
+    background-color: #FCFCFC;
+}
+.mobile-card>mat-card-title {
+    font-size: 1em;
+}
+.mobile-card>mat-card-subtitle {
+    font-size: 0.9em;
+}
+.mobile-card>mat-card-content {
+    font-size: 0.9em;
+}
