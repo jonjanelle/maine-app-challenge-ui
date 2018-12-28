@@ -1,5 +1,28 @@
+.mobile-only {
+   display: none;
+   color: white;
+}
+
+.menu-spacer {
+   flex: 1 1 auto;
+}
+
+.nav-link {
+   color: ivory;
+}
+
+.nav-link:hover {
+   color: lightgoldenrodyellow;
+}
+
 @media(max-width: 768px) {
    #navbar-title {
-      font-size: 1em;
+      font-size: 0.8em;
+   }
+   .hidden-mobile {
+      display: none;
+   }
+   .mobile-only {
+      display: flex;
    }
 }

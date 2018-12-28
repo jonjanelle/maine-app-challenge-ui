@@ -6,7 +6,6 @@ import { IKeyValuePair } from './interfaces/IKeyValuePair';
   providedIn: 'root',
 })
 export class AppService {
-
   private readonly baseUri: string = "https://maine-app-challenge-api.herokuapp.com/";
   private innerWidth: number;
 
