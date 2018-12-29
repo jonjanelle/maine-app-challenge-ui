@@ -53,7 +53,7 @@ export class ResourcesComponent implements OnInit {
   public categories: string[] = [];
   
   // TODO: retrieve categories from server.
-  public allCategories: string[] = ['Android', 'iOS', 'MIT App Inventor', 'Code.Org App Lab', 'Xamarin'];
+  public allCategories: string[] = ['Android', 'iOS', 'MIT App Inventor', 'Code.org App Lab', 'Xamarin'];
   private resourceCategories: IKeyValuePair<number, string[]>[] = [];
 
   //sort fields for select on mobile
@@ -129,7 +129,6 @@ export class ResourcesComponent implements OnInit {
     this.resourceService.getResourceDescriptions().subscribe(rd => {
       this.resources = rd.map(r => r.resource);
       rd.forEach(r => this.resourceCategories.push({key: r.resource.id, value: r.categories.map(c => c.name)}));
-
       this.setResourceSections();
       this.refreshCurrentResourceSection()
       if (isNullOrUndefined(this.dataSources) || this.dataSources.length === 0) {
