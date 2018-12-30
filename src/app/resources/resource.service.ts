@@ -45,13 +45,13 @@ export class ResourceService {
     return this.http.post<IResource>(this.resourceUri, {resource: resource}, httpOptions);
   }
 
-  public updateResource(resource: IResource): void {
+  // public updateResource(resource: IResource): void {
 
-  }
+  // }
 
-  public deleteResource(resource: IResource): void {
+  // public deleteResource(resource: IResource): void {
 
-  }
+  // }
 
   public getResourceDescriptions(routeParams: IKeyValuePair<string, string>[] = null): Observable<IResourceDescription[]> {
     let endpoint = "";

@@ -50,22 +50,23 @@ export class ResourcesComponent implements OnInit {
   public separatorKeysCodes: number[] = [ENTER, COMMA];
   public categoryCtrl = new FormControl();
   public filteredCategories: Observable<string[]>;
+  // All available category names
+  public allCategories: string[];
+  // Categories currently selected for filtering
   public categories: string[] = [];
-  
-  // TODO: retrieve categories from server.
-  public allCategories: string[] = ['Android', 'iOS', 'MIT App Inventor', 'Code.org App Lab', 'Xamarin'];
+  // Logical operator to use to join filtering categories
+  public joinTypes: string[] = ['or', 'and', 'not'];
+  public selectedJoinType: string = this.joinTypes[1];
+  // resource id -> list of categories for that resource
   private resourceCategories: IKeyValuePair<number, string[]>[] = [];
 
-  //sort fields for select on mobile
+  //sort fields for select menu on mobile, non-mobile uses table.
   public sortFields: IKeyValuePair<string, string>[] = [{key: "Name", value: "name"},
                                                         {key: "Description", value: "description"},
                                                         {key: "URL", value: "url"}];
   public sortDir: string = "asc";
 
-  public joinTypes: string[] = ['or', 'and', 'not'];
-  public selectedJoinType: string = this.joinTypes[1];
-
-  //name of currently selected tab, corresponds to a ResourceType name and is used to look up ResourceType ids
+  // Name of currently selected tab, corresponds to a ResourceType name and is used to look up ResourceType ids
   private currentSection: string;
   
   @ViewChild(MatSort) sort: MatSort;
@@ -79,6 +80,9 @@ export class ResourcesComponent implements OnInit {
   ) { 
     this.getResources();
     this.isMobile = window.innerWidth <= 768;
+    this.appService.getCategories().subscribe(resp => {
+      this.allCategories = resp.map(c => c.name);
+    });
   }
   
   ngOnInit() {
@@ -199,6 +203,7 @@ export class ResourcesComponent implements OnInit {
     if (index >= 0) {
       this.categories.splice(index, 1);
     }
+    this.categoryCtrl.setValue('');
     this.refreshCurrentResourceSection();
   }
 
