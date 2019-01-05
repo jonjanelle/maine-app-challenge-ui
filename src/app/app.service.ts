@@ -10,6 +10,7 @@ import { shareReplay } from 'rxjs/operators';
 })
 export class AppService {
   private readonly baseUri: string = "https://maine-app-challenge-api.herokuapp.com/";
+  // private readonly baseUri: string = "http://localhost:3000/";
   private readonly categoryUri: string = "categories";
   private _categoryCache: Observable<ICategory[]>;
   private innerWidth: number;

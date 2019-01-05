@@ -1,3 +1,5 @@
+// Note: This whole component is a mess. I'm sorry. 
+
 import {Component, OnInit, ElementRef, ViewChild, HostListener} from '@angular/core';
 import {MatSort, MatTableDataSource, MatChipInputEvent, MatDialog,
         MatAutocompleteSelectedEvent, MatAutocomplete, Sort} from '@angular/material';
@@ -22,6 +24,7 @@ import { ResourceService } from './resource.service';
 import { IAddResourceDialogData } from './dialogs/IAddResourceDialogData';
 import { isNullOrUndefined } from 'util';
 import { AppService } from '../app.service';
+import { ICategory } from '../interfaces/ICategory';
 
 @Component({
   selector: 'view-resources',
@@ -51,6 +54,7 @@ export class ResourcesComponent implements OnInit {
   public categoryCtrl = new FormControl();
   public filteredCategories: Observable<string[]>;
   // All available category names
+  public rawCategories: ICategory[];
   public allCategories: string[];
   // Categories currently selected for filtering
   public categories: string[] = [];
@@ -81,6 +85,7 @@ export class ResourcesComponent implements OnInit {
     this.getResources();
     this.isMobile = window.innerWidth <= 768;
     this.appService.getCategories().subscribe(resp => {
+      this.rawCategories = resp;
       this.allCategories = resp.map(c => c.name);
     });
   }
@@ -213,12 +218,11 @@ export class ResourcesComponent implements OnInit {
     ) {
       this.categories.push(event.option.viewValue);
     }
+    
     this.categoryInput.nativeElement.value = '';
     this.categoryCtrl.setValue(null);
     this.categoryInput.nativeElement.blur();
-
-    
-     this.refreshCurrentResourceSection();
+    this.refreshCurrentResourceSection();
   }
 
   private _filter(value: string): string[] {
@@ -275,7 +279,7 @@ export class ResourcesComponent implements OnInit {
       is_featured: false, 
       is_approved: false
     }
-    this.openAddDialog({title: resourceType, resource: newResource});
+    this.openAddDialog({title: resourceType, resource: newResource, categories: this.rawCategories});
   }
 
   openAddDialog(dialogData: IAddResourceDialogData): void {

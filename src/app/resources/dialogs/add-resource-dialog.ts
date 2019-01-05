@@ -6,6 +6,9 @@ import { IResource } from 'src/app/interfaces/IResource';
 import { ResourceService } from '../resource.service';
 import { MAT_LABEL_GLOBAL_OPTIONS} from '@angular/material/core';
 import {FormControl, Validators} from '@angular/forms';
+import { isNullOrUndefined } from 'util';
+import { IResourceCategory } from 'src/app/interfaces/IResourceCategory';
+import { Observable, forkJoin } from 'rxjs';
 
 interface IResourceError {
   name: string | null, 
@@ -24,16 +27,18 @@ interface IResourceError {
 export class AddResourceDialog {
   public errors: IResourceError;
   public isBusy: boolean;
-
+  public categoryCtrl: FormControl;
+  
   constructor(
     public dialogRef: MatDialogRef<AddResourceDialog>,
     private resourceService: ResourceService,
     private snackBar: MatSnackBar,
-
+    
     @Inject(MAT_DIALOG_DATA) public data: IAddResourceDialogData
-  ) {
-    this.resetErrors();
-  }
+    ) {
+      this.resetErrors();
+      this.categoryCtrl = new FormControl();
+    }
   
   private resetErrors() {
     this.errors = {
@@ -47,7 +52,18 @@ export class AddResourceDialog {
     this.isBusy = true;
     this.resourceService.createResource(this.data.resource).subscribe(resource => {
       this.openSnackBar("Resource created successfully", "Success"); 
-      this.dialogRef.close(this.data.resource);
+
+      console.log("New resource: ", resource, "categories: ", this.categoryCtrl.value);
+      if (!isNullOrUndefined(this.categoryCtrl.value)) {
+        let observables: Observable<IResourceCategory>[] = [];
+        (<Array<number>>this.categoryCtrl.value).forEach(c_id => {
+          observables.push(this.resourceService.createResourceCategory({resource_id: resource.id, category_id: c_id}));
+        });
+        forkJoin(observables).subscribe(r => {
+          this.dialogRef.close(this.data.resource);
+        });
+      }
+
     }, (error) => { 
       this.errors.name = error.error.name;
       this.errors.description = error.error.description;

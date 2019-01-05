@@ -17,8 +17,13 @@
     <mat-form-field>
       <mat-label>URL</mat-label>
       <input matInput [(ngModel)]="data.resource.url" name="url">
-      <!-- <mat-error *ngIf="errors.url != null">URL {{errors.url.join(", ")}}</mat-error> -->
       <div class="error-message" *ngIf="errors.url != null">URL {{ errors.url.join(", ") }}</div>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Categories" [formControl]="categoryCtrl" multiple>
+        <mat-option *ngFor="let category of data.categories" [value]="category.id">{{ category.name }}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-dialog-actions style="justify-content: flex-end;">

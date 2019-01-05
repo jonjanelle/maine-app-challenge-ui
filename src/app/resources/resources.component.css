@@ -60,3 +60,7 @@ mat-option {
 .mobile-card>mat-card-content {
     font-size: 0.9em;
 }
+.mat-pseudo-checkbox-checked::after {
+    width: 12px !important;
+    height: 5px !important;
+}

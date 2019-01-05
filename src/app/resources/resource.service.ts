@@ -6,6 +6,7 @@ import { IKeyValuePair } from '../interfaces/IKeyValuePair';
 import { isNullOrUndefined } from 'util';
 import { AppService } from '../app.service';
 import { IResourceDescription } from '../interfaces/IResourceDescription';
+import { IResourceCategory } from '../interfaces/IResourceCategory';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,6 +20,7 @@ const httpOptions = {
 export class ResourceService {
   private resourceUri: string;
   private resourceDescriptionUri: string;
+  private resourceCategoryUri: string;
 
   constructor(
       private http: HttpClient,
@@ -27,6 +29,7 @@ export class ResourceService {
       this.appService.getBaseUri().subscribe(baseUri => {
         this.resourceUri = baseUri + "resources";
         this.resourceDescriptionUri = baseUri + "resource_descriptions";
+        this.resourceCategoryUri = baseUri + "resource_categories";
       });
     }
 
@@ -45,13 +48,6 @@ export class ResourceService {
     return this.http.post<IResource>(this.resourceUri, {resource: resource}, httpOptions);
   }
 
-  // public updateResource(resource: IResource): void {
-
-  // }
-
-  // public deleteResource(resource: IResource): void {
-
-  // }
 
   public getResourceDescriptions(routeParams: IKeyValuePair<string, string>[] = null): Observable<IResourceDescription[]> {
     let endpoint = "";
@@ -62,5 +58,10 @@ export class ResourceService {
     
     return this.http.get<IResourceDescription[]>(endpoint);
   } 
+
+  public createResourceCategory(resourceCategory: IResourceCategory): Observable<IResourceCategory> {
+    return this.http.post<IResourceCategory>(this.resourceCategoryUri, {resource_category: resourceCategory}, httpOptions);
+
+  }
   
 }
