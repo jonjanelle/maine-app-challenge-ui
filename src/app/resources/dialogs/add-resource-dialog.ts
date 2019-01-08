@@ -45,7 +45,8 @@ export class AddResourceDialog {
       name: null, 
       description: null,
       url: null
-    }
+    };
+
   }
   
   public onSave() {
@@ -53,7 +54,6 @@ export class AddResourceDialog {
     this.resourceService.createResource(this.data.resource).subscribe(resource => {
       this.openSnackBar("Resource created successfully", "Success"); 
 
-      console.log("New resource: ", resource, "categories: ", this.categoryCtrl.value);
       if (!isNullOrUndefined(this.categoryCtrl.value)) {
         let observables: Observable<IResourceCategory>[] = [];
         (<Array<number>>this.categoryCtrl.value).forEach(c_id => {
@@ -68,7 +68,6 @@ export class AddResourceDialog {
       this.errors.name = error.error.name;
       this.errors.description = error.error.description;
       this.errors.url = error.error.url;
-    }, () => {
       this.isBusy = false;
     });
   }

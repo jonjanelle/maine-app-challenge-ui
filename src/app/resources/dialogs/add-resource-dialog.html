@@ -4,19 +4,19 @@
   <div class="form-container">
     <mat-form-field>
       <mat-label>Name</mat-label>
-      <input matInput [(ngModel)]="data.resource.name" name="name">
+      <input matInput [(ngModel)]="data.resource.name" name="name" required>
       <div class="error-message" *ngIf="errors.name">Name {{ errors.name }}</div>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Description</mat-label>
-      <textarea matInput rows="4" [(ngModel)]="data.resource.description" name="description"></textarea>
+      <textarea matInput rows="4" [(ngModel)]="data.resource.description" name="description" required></textarea>
       <div class="error-message" *ngIf="errors.description">Description {{ errors.description.join(", ") }}</div>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>URL</mat-label>
-      <input matInput [(ngModel)]="data.resource.url" name="url">
+      <input matInput [(ngModel)]="data.resource.url" name="url" required>
       <div class="error-message" *ngIf="errors.url != null">URL {{ errors.url.join(", ") }}</div>
     </mat-form-field>
 
