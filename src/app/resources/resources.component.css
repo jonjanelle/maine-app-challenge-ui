@@ -50,6 +50,8 @@ mat-option {
 
 .mobile-card {
     background-color: #FCFCFC;
+    overflow: hidden;
+    transition: .2s ease-in-out;
 }
 .mobile-card>mat-card-title {
     font-size: 1em;
@@ -63,4 +65,8 @@ mat-option {
 .mat-pseudo-checkbox-checked::after {
     width: 12px !important;
     height: 5px !important;
+}
+
+.mobile-card:hover {
+box-shadow: 0 3px 5px rgba(0,0,0,0.4);
 }
