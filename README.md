@@ -1,5 +1,6 @@
 # Maine App Challenge
 A collection of resources for students and teachers participating in the Maine App Challenge
+The API for this project is https://github.com/jonjanelle/maine_app_challenge
 
 ## Development server
 Run ng serve for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
