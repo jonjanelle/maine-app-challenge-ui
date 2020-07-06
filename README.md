@@ -1,5 +1,6 @@
 # Maine App Challenge
 A collection of resources for students and teachers participating in the Maine App Challenge
+
 The API for this project is https://github.com/jonjanelle/maine_app_challenge
 
 ## Development server
